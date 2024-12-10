@@ -23,10 +23,12 @@ reset.addEventListener("click", () => {
     location.reload();
 });
 
+//functionen till hold there the skickar upp poängen till total score
 let hold = document.getElementById("hold");
 const score1 = document.getElementById("score-1");
 let totalscore1 = 0;
 
+//functionen till hold
 hold.addEventListener("click", function(){
     totalscore1 += totalPoints;
     score1.textContent = totalscore1;
