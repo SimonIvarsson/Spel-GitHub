@@ -14,3 +14,11 @@ roll_dice.addEventListener("click", function(){
     }
     currentText.textContent = "Current: " + totalPoints;
 });
+
+//Reset knappen för spelet som nollställer allt från början
+let reset = document.getElementById("reset");
+
+//functionen till reset
+reset.addEventListener("click", () => {
+    location.reload();
+});
