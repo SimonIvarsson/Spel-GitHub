@@ -22,3 +22,14 @@ let reset = document.getElementById("reset");
 reset.addEventListener("click", () => {
     location.reload();
 });
+
+let hold = document.getElementById("hold");
+const score1 = document.getElementById("score-1");
+let totalscore1 = 0;
+
+hold.addEventListener("click", function(){
+    totalscore1 += totalPoints;
+    score1.textContent = totalscore1;
+    currentText = "Current: " + 0;
+    
+})
