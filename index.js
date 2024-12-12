@@ -1,37 +1,60 @@
-// Hämtar texten för poängen för spelare 1 | Simon I
-const currentText = document.getElementById("current-1");
+// Start värden | Simon I
+let currentScor = 0;
+let activePlayer = 1;
+let scores = [0, 0];
 
-// När knappen trycks så slumpas ett tal mellan 1-6  och ändrar poängen | Simon I
-const roll_dice = document.getElementById("roll-dice");
-let totalPoints = 1;
-roll_dice.addEventListener("click", function(){
-    var points = (Math.floor(Math.random() * 6) + 1);
-    if (points === 1) {
-        totalPoints = 0;
-    } 
-    else {
-        totalPoints += points; 
-    }
-    currentText.textContent = "Current: " + totalPoints;
+// Hämtar elementen från HTML | Simon I
+const rollDiceButton = document.getElementById("roll-dice");
+const holdButton = document.getElementById("hold");
+const resetButton = document.getElementById("reset");
+const diceElement = document.getElementById("dice");
+const currentElements = [
+  document.getElementById("current-1"),
+  document.getElementById("current-2"),
+];
+const scoreElements = [
+  document.getElementById("score-1"),
+  document.getElementById("score-2"),
+];
+
+
+function updateCurrentScor() {
+  currentElements[activePlayer - 1].textContent = `Current: ${currentScor}`;
+}
+
+// Byter spelare | Veljko
+function swichPlayer() {
+  currentScor = 0;
+  updateCurrentScor();
+  activePlayer = activePlayer === 1 ? 2 : 1;
+}
+
+// Slår tärningen mellan 1-6 om spelaren slår 1 så går turen över | Simon I
+rollDiceButton.addEventListener("click", function () {
+  const dice = Math.floor(Math.random() * 6) + 1;
+  diceElement.textContent = "${dice}";
+
+  if (dice === 1) {
+    swichPlayer();
+  } else {
+    currentScor += dice;
+    updateCurrentScor();
+  }
 });
 
-//Reset knappen för spelet som nollställer allt från början
-let reset = document.getElementById("reset");
+// Hold knappen | Veljko
+holdButton.addEventListener("click", function () {
+  scores[activePlayer - 1] += currentScor;
+  scoreElements[activePlayer - 1].textContent = scores[activePlayer - 1];
 
-//functionen till reset
-reset.addEventListener("click", () => {
-    location.reload();
+  if (scores[activePlayer - 1] >= 50) {
+    alert("Player ${activePlayer} winns!");
+  } else {
+    swichPlayer();
+  }
 });
 
-//functionen till hold there the skickar upp poängen till total score
-let hold = document.getElementById("hold");
-const score1 = document.getElementById("score-1");
-let totalscore1 = 0;
-
-//functionen till hold
-hold.addEventListener("click", function(){
-    totalscore1 += totalPoints;
-    score1.textContent = totalscore1;
-    currentText = "Current: " + 0;
-    
-})
+// Functionen till reset | Veljko
+resetButton.addEventListener("click", function () {
+  location.reload();
+});
